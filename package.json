@@ -20,6 +20,7 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test"
   },
+  "proxy": "http://localhost:3812",
   "eslintConfig": {
     "extends": "react-app"
   },
