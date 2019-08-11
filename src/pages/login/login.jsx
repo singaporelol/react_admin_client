@@ -1,16 +1,20 @@
 import React, { Component } from "react";
 import "./login.less";
 import { Form, Icon, Input, Button } from 'antd';
-import {reqLogin} from './../../api/index'
+import { connect } from 'react-redux'
+import { ActionCreator } from "../../redux/action";
+
+
+// import {reqLogin} from './../../api/index'
+
 class Login extends Component {
   handleSubmit = e => {
     e.preventDefault();
-    this.props.form.validateFields(async(err, values) => {
+    this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
         //发送ajax请求到后台
-        let {data}=await reqLogin(values);
-        console.log(data);
+        // let {data}=await reqLogin(values);
+        this.props.reqLogin(values)
       }
     });
   };
@@ -107,7 +111,21 @@ class Login extends Component {
     );
   }
 }
+const mapStateToProps = (state) => ({
+  UserInfo:state.UserInfo
+})
 
-export default Form.create({ name: 'normal_login' })(Login);
+const mapDispatchToProps =dispatch=>({
+  reqLogin(data){
+    return dispatch(ActionCreator.asyGetUser(data))
+  }
+})
+export default connect(mapStateToProps, mapDispatchToProps)(Form.create({ name: 'normal_login' })(Login));
 
 
+
+
+
+
+
+// export default connect(mapStateToProps, mapDispatchToProps)(login)
