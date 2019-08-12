@@ -129,9 +129,3 @@ const mapDispatchToProps =dispatch=>({
 export default connect(mapStateToProps, mapDispatchToProps)(Form.create({ name: 'normal_login' })(Login));
 
 
-
-
-
-
-
-// export default connect(mapStateToProps, mapDispatchToProps)(login)
