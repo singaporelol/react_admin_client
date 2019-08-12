@@ -1,65 +1,74 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React, { Component } from "react";
+import { connect } from "react-redux";
 import { Menu, Icon } from "antd";
-import './leftnav.less'
+import "./leftnav.less";
 const { SubMenu } = Menu;
-export class LeftNav extends Component {
-  
 
-  render() {
-    return (
-      <div className="left-nav">
-        <div className="logo">
-            <img src="/favicon.ico" alt="logo" />
-            <span>React后台</span>
-        </div>
-        <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
-          <Menu.Item key="1">
-            <Icon type="pie-chart" />
-            <span>Option 1</span>
+class LeftNav extends Component {
+  constructor(props) {
+    super(props);
+    this.state={
+      collapsed:this.props.collapsed
+    }
+  }
+  loadMenuList = menuList => {
+    return menuList.map((item, index) => {
+      if (item.ChildMenu.length <= 0) {
+        return (
+          <Menu.Item key={item.Id}>
+            <span>
+              <Icon type="team" />
+              <span>{item.Title}</span>
+            </span>{" "}
           </Menu.Item>
-          {/* <Menu.Item key="2">
-            <Icon type="desktop" />
-            <span>Option 2</span>
-          </Menu.Item>
+        );
+      } else {
+        return (
           <SubMenu
-            key="sub1"
-            title={
-              <span>
-                <Icon type="user" />
-                <span>User</span>
-              </span>
-            }
-          >
-            <Menu.Item key="3">Tom</Menu.Item>
-            <Menu.Item key="4">Bill</Menu.Item>
-            <Menu.Item key="5">Alex</Menu.Item>
-          </SubMenu> */}
-          <SubMenu
-            key="sub2"
+            key={item.Id}
             title={
               <span>
                 <Icon type="team" />
-                <span>Team</span>
+                <span>{item.Title}</span>
               </span>
             }
           >
-            <Menu.Item key="6">Team 1</Menu.Item>
-            <Menu.Item key="8">Team 2</Menu.Item>
+            {this.loadMenuList(item.ChildMenu)}
           </SubMenu>
-          
+        );
+      }
+    });
+  };
+
+  static getDerivedStateFromProps(prestate, nextstate) {
+    return {
+      collapsed: prestate.collapsed
+    };
+  }
+
+  render() {
+    let { MenuList } = this.props.UserInfo.userAllAction;
+    return (
+      <div className="left-nav">
+        <div className="logo">
+          <img src="/favicon.ico" alt="logo" />
+          {this.props.collapsed ? <span></span> : <span>React后台</span>}
+        </div>
+        <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
+          {this.loadMenuList(MenuList)}
         </Menu>
       </div>
-    )
+    );
   }
 }
 
-const mapStateToProps = (state) => ({
-  
-})
+const mapStateToProps = state => ({
+  UserInfo: state.UserInfo
+});
 
-const mapDispatchToProps = {
-  
-}
+const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(LeftNav)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LeftNav);

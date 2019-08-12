@@ -19,6 +19,7 @@ export const ActionCreator={
         })
       }else{
         // storageUtils.saveUser(payload)
+        payload.userAllAction={...JSON.parse(payload.userAllAction)}
         dispatch({
           type:ActionType.GET_USER,
           payload

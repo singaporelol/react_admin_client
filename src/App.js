@@ -15,9 +15,9 @@ class App extends Component {
             <Route path="/admin" render={(props)=>{
               //在页面跳转之前，检查用户是否登录，如果未登录，跳转登录页面。
               if(Object.keys(this.props.UserInfo).length){
-                return <Admin />
+                return <Admin {...props} />
               }
-              return <Redirect to="/login" {...props}/>
+              return <Redirect to="/login"/>
             }}/>
             <Route component={Login}/>
           </Switch>

@@ -5,7 +5,6 @@ import LeftNav from './../../components/leftnav/leftnav'
 import { Layout, Breadcrumb} from "antd";
 import "./admin.less";
 
-import{withRouter} from 'react-router-dom'
 const { Header, Content, Footer, Sider } = Layout;
 
 class Admin extends Component {
@@ -19,6 +18,8 @@ class Admin extends Component {
   };
 
   render() {
+    
+    
     return (
       <Layout className="admin">
         {/* <div className="left-nav"> */}
@@ -28,7 +29,7 @@ class Admin extends Component {
           onCollapse={this.onCollapse}
           width="280px"
         >
-          <LeftNav/>
+          <LeftNav collapsed={this.state.collapsed}/>
         </Sider>
         <Layout>
           <Header style={{ background: "#fff", padding: 0 }} />
@@ -50,8 +51,10 @@ class Admin extends Component {
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  UserInfo:state.UserInfo
+});
 
 export default connect(
   mapStateToProps
-)(withRouter(Admin));
+)(Admin);
