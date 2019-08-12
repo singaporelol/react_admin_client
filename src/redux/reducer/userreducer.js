@@ -8,6 +8,12 @@ export const userReducer=(preState={}, action)=>{
         ...action.payload
       }
     }
+    case ActionType.LOGIN_FAIL:{
+      return{
+        preState,
+        errMsg:action.payload
+      }
+    }
     default:{
       return preState
     }
