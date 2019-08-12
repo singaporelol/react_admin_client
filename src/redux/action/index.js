@@ -1,5 +1,5 @@
 import {reqLogin} from './../../api/index'
-import {storageUtils} from '../../utils/storageUtils'
+// import {storageUtils} from '../../utils/storageUtils'
 export const ActionType={
   "GET_USER":"GET_USER",
   "LOGIN_FAIL":"LOGIN_FAIL",
@@ -11,13 +11,14 @@ export const ActionCreator={
   asyGetUser(user){
     return async(dispatch,getState)=>{
       let payload=await reqLogin(user)
+      // console.log(payload)
       if(payload.code===0){
         dispatch({
           type:ActionType.LOGIN_FAIL,
-          payload:payload.errMsg
+          payload
         })
       }else{
-        storageUtils.saveUser(payload)
+        // storageUtils.saveUser(payload)
         dispatch({
           type:ActionType.GET_USER,
           payload

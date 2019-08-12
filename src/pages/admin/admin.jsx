@@ -4,9 +4,11 @@ import { connect } from "react-redux";
 import LeftNav from './../../components/leftnav/leftnav'
 import { Layout, Breadcrumb} from "antd";
 import "./admin.less";
+
+import{withRouter} from 'react-router-dom'
 const { Header, Content, Footer, Sider } = Layout;
 
-export class Admin extends Component {
+class Admin extends Component {
   state = {
     collapsed: false
   };
@@ -50,9 +52,6 @@ export class Admin extends Component {
 
 const mapStateToProps = state => ({});
 
-const mapDispatchToProps = {};
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Admin);
+  mapStateToProps
+)(withRouter(Admin));

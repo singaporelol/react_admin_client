@@ -3,8 +3,8 @@ import "./login.less";
 import { Form, Icon, Input, Button } from 'antd';
 import { connect } from 'react-redux'
 import { ActionCreator } from "../../redux/action";
-import {storageUtils} from './../../utils/storageUtils'
-// import {Redirect} from 'react-router-dom'
+// import {storageUtils} from './../../utils/storageUtils'
+import {Redirect} from 'react-router-dom'
 // import {reqLogin} from './../../api/index'
 
 class Login extends Component {
@@ -19,11 +19,10 @@ class Login extends Component {
     });
   };
   render() {
-    if(storageUtils.getUser()){
-      this.props.history.push('/admin')
-      //或者
-      // return <Redirect to="/admin"></Redirect>
+    if(this.props.UserInfo.code===1){
+      return <Redirect to="/admin"></Redirect>
     }
+    console.log(this.props.UserInfo)
     const { getFieldDecorator } = this.props.form;
     const formItemLayout={
       labelCol:{
