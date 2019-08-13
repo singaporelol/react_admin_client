@@ -3,9 +3,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import LeftNav from './../../components/leftnav/leftnav'
 import { Layout, Breadcrumb} from "antd";
+import Header from './../../components/header/header'
 import "./admin.less";
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Content, Footer, Sider } = Layout;
 
 class Admin extends Component {
   state = {
@@ -32,7 +33,7 @@ class Admin extends Component {
           <LeftNav collapsed={this.state.collapsed}/>
         </Sider>
         <Layout>
-          <Header style={{ background: "#fff", padding: 0 }} />
+          <Header></Header>
           <Content style={{ margin: "0 16px" }}>
             <Breadcrumb style={{ margin: "16px 0" }}>
               <Breadcrumb.Item>User</Breadcrumb.Item>

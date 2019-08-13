@@ -14,6 +14,9 @@ export const userReducer=(preState={}, action)=>{
         ...action.payload
       }
     }
+    case ActionType.REMOVE_USER:{
+      return {}
+    }
     default:{
       return preState
     }

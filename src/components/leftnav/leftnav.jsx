@@ -8,7 +8,6 @@ class LeftNav extends Component {
   constructor(props) {
     super(props);
     this.state={
-      collapsed:this.props.collapsed
     }
   }
   loadMenuList = menuList => {
@@ -40,12 +39,14 @@ class LeftNav extends Component {
     });
   };
 
-  static getDerivedStateFromProps(prestate, nextstate) {
-    return {
-      collapsed: prestate.collapsed
-    };
+  static getDerivedStateFromProps(nextProps, preState) {
+    if(nextProps.collapsed!==preState.collapsed){
+      return {
+        collapsed: nextProps.collapsed
+      };
+    }
+    return null
   }
-
   render() {
     let { MenuList } = this.props.UserInfo.userAllAction;
     return (

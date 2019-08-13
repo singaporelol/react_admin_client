@@ -4,7 +4,9 @@ export const ActionType={
   "GET_USER":"GET_USER",
   "LOGIN_FAIL":"LOGIN_FAIL",
   "ADD_USER":"GET_USER",
-  "EDIT_USER":"EDIT_USER"
+  "EDIT_USER":"EDIT_USER",
+  "REMOVE_USER":"REMOVE_USER"
+
 }
 export const ActionCreator={
   //异步使用redux-thunk，配合发送ajax使用
@@ -35,6 +37,11 @@ export const ActionCreator={
   editUser(){
 
   },
+  removeUser(){
+    return {
+      type:ActionType.REMOVE_USER,
+    }
+  }
 }
 
 
