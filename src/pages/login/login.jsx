@@ -22,7 +22,6 @@ class Login extends Component {
     if(this.props.UserInfo.code===1){
       return <Redirect to="/admin"></Redirect>
     }
-    console.log(this.props.UserInfo)
     const { getFieldDecorator } = this.props.form;
     const formItemLayout={
       labelCol:{

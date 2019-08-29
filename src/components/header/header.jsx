@@ -44,7 +44,7 @@ export class Header extends Component {
                 <span>欢迎</span>&nbsp;<a href="/">{this.props.username}</a>
               </li>
               <li>
-                <a onClick={()=>this.props.logOut()}>退出</a>
+                <a href="/" onClick={()=>this.props.logOut()}>退出</a>
               </li>
             </ul>
           </div>
@@ -73,6 +73,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch)=>({
   logOut(){
+    // document.cookie.ASP.NET_SessionId="";
    return dispatch(ActionCreator.removeUser())
   },
   // xxx:()=>{

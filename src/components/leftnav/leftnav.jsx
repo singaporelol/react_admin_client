@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Menu, Icon } from "antd";
 import "./leftnav.less";
+import {menuConfig} from '../../config/menuConfig'
+import {Link,withRouter} from 'react-router-dom'
+import { ActionCreator } from "../../redux/action";
+import Item from "antd/lib/list/Item";
 const { SubMenu } = Menu;
 
 class LeftNav extends Component {
@@ -9,34 +13,23 @@ class LeftNav extends Component {
     super(props);
     this.state={
     }
+    this.menuListTree=[];
   }
-  loadMenuList = menuList => {
-    return menuList.map((item, index) => {
-      if (item.ChildMenu.length <= 0) {
-        return (
-          <Menu.Item key={item.Id}>
-            <span>
-              <Icon type="team" />
-              <span>{item.Title}</span>
-            </span>{" "}
-          </Menu.Item>
-        );
-      } else {
-        return (
-          <SubMenu
-            key={item.Id}
-            title={
-              <span>
-                <Icon type="team" />
-                <span>{item.Title}</span>
-              </span>
-            }
-          >
-            {this.loadMenuList(item.ChildMenu)}
-          </SubMenu>
-        );
-      }
-    });
+  getMenuListTree = (MenuList,pId) => {
+   let rootMenuList=MenuList.filter((item)=>item.ParentId==pId);
+   return rootMenuList.map(item=>{
+     if(MenuList.filter(menuListItem=>menuListItem.ParentId==item.Id).length>0){
+      return <SubMenu key={item.Id} title={item.Title}>
+        {this.getMenuListTree(MenuList,item.Id)}
+       </SubMenu>
+    }else{
+      return (
+      <Menu.Item key={item.Id}>
+        {/* {item.Title} */}
+        <Link to={`${this.props.match.path}${item.Url}`}>{item.Title}</Link>
+      </Menu.Item>
+      )}
+   })
   };
 
   static getDerivedStateFromProps(nextProps, preState) {
@@ -47,8 +40,12 @@ class LeftNav extends Component {
     }
     return null
   }
+  componentDidMount(){
+    this.props.getMenuList();
+  }
   render() {
-    let { MenuList } = this.props.UserInfo.userAllAction;
+    // let combineMenuList=menuConfig.concat(MenuList)
+    // console.log(this.props)
     return (
       <div className="left-nav">
         <div className="logo">
@@ -56,7 +53,7 @@ class LeftNav extends Component {
           {this.props.collapsed ? <span></span> : <span>React后台</span>}
         </div>
         <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
-          {this.loadMenuList(MenuList)}
+          {this.getMenuListTree(this.props.MenuList,0)}
         </Menu>
       </div>
     );
@@ -64,12 +61,17 @@ class LeftNav extends Component {
 }
 
 const mapStateToProps = state => ({
-  UserInfo: state.UserInfo
+  MenuList: state.MenuList
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = dispatch=>({
+  //拿到menu菜单
+  getMenuList(){
+    dispatch(ActionCreator.asyGetMenulist())
+  }
+});
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(LeftNav);
+)(withRouter(LeftNav));

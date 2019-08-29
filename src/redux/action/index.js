@@ -1,11 +1,12 @@
-import {reqLogin} from './../../api/index'
+import {reqLogin, reqMenuList} from './../../api/index'
 // import {storageUtils} from '../../utils/storageUtils'
 export const ActionType={
   "GET_USER":"GET_USER",
   "LOGIN_FAIL":"LOGIN_FAIL",
   "ADD_USER":"GET_USER",
   "EDIT_USER":"EDIT_USER",
-  "REMOVE_USER":"REMOVE_USER"
+  "REMOVE_USER":"REMOVE_USER",
+  "GET_MENULIST":"GET_MENULIST",
 
 }
 export const ActionCreator={
@@ -13,21 +14,24 @@ export const ActionCreator={
   asyGetUser(user){
     return async(dispatch,getState)=>{
       let payload=await reqLogin(user)
-      // console.log(payload)
-      if(payload.code===0){
-        dispatch({
-          type:ActionType.LOGIN_FAIL,
-          payload
-        })
-      }else{
-        // storageUtils.saveUser(payload)
-        payload.userAllAction={...JSON.parse(payload.userAllAction)}
-        dispatch({
-          type:ActionType.GET_USER,
-          payload
-        })
-      }
-
+      //因为检测的如果登录失败后台就不返回用户名了，所以不需要这个判断
+      //失败以后会有err_msg，会自动显示。
+      // if(payload.code===0){
+      //   dispatch({
+      //     type:ActionType.LOGIN_FAIL,
+      //     payload
+      //   })
+      // }else{
+      //   // storageUtils.saveUser(payload)
+      //   dispatch({
+      //     type:ActionType.GET_USER,
+      //     payload
+      //   })
+      // }
+      dispatch({
+        type:ActionType.GET_USER,
+        payload
+      })
         
     }
   },
@@ -40,6 +44,16 @@ export const ActionCreator={
   removeUser(){
     return {
       type:ActionType.REMOVE_USER,
+    }
+  },
+  asyGetMenulist(){
+    return async(dispatch,getState)=>{
+      let data=await reqMenuList();
+      let MenuList=[...JSON.parse(data.MenuList)]
+      dispatch({
+        type:ActionType.GET_MENULIST,
+        payload:MenuList
+      })
     }
   }
 }
