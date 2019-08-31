@@ -1,12 +1,14 @@
-import {reqLogin, reqMenuList} from './../../api/index'
+import {reqLogin, reqMenuList, reqUserList,addUser} from './../../api/index'
 // import {storageUtils} from '../../utils/storageUtils'
 export const ActionType={
   "GET_USER":"GET_USER",
   "LOGIN_FAIL":"LOGIN_FAIL",
-  "ADD_USER":"GET_USER",
+  "ADD_USER":"ADD_USER",
   "EDIT_USER":"EDIT_USER",
   "REMOVE_USER":"REMOVE_USER",
   "GET_MENULIST":"GET_MENULIST",
+  "GET_USERLIST":"GET_USERLIST",
+  "GET_USERLISTBYPAGINATION":"GET_USERLISTBYPAGINATION",
 
 }
 export const ActionCreator={
@@ -35,8 +37,16 @@ export const ActionCreator={
         
     }
   },
-  addUser(){
-
+  asyAddUser(user){
+    return async (dispatch,getState)=>{
+      let data=await addUser(user)
+      if(data.code===1){
+        dispatch({
+          type:ActionType.ADD_USER,
+          payload:data.data
+        })
+      }
+    }
   },
   editUser(){
 
@@ -53,6 +63,24 @@ export const ActionCreator={
       dispatch({
         type:ActionType.GET_MENULIST,
         payload:MenuList
+      })
+    }
+  },
+  asyGetUserlist(){
+    return async (dispatch,getState)=>{
+      let {data}=await reqUserList();
+      dispatch({
+        type:ActionType.GET_USERLIST,
+        payload:data
+      })
+    }
+  },
+  asyGetUserlistByPagination(currentPage,pageSize){
+    return async (dispatch,getState)=>{
+      let {data}=await reqUserList();
+      dispatch({
+        type:ActionType.GET_USERLISTBYPAGINATION,
+        payload:data
       })
     }
   }

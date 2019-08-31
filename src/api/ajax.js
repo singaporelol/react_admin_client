@@ -10,7 +10,8 @@ export const ajax = (url="",data = {}, type = "get") => {
       promise = axios.get(url, {
         params: data
       });
-    } else {
+    } else if (type==="post"){
+      promise=axios.post(url,data)
     }
     promise
       .then(data => {

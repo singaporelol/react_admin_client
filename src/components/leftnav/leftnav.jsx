@@ -13,7 +13,6 @@ class LeftNav extends Component {
     super(props);
     this.state={
     }
-    this.menuListTree=[];
   }
   getMenuListTree = (MenuList,pId) => {
    let rootMenuList=MenuList.filter((item)=>item.ParentId==pId);
@@ -44,7 +43,7 @@ class LeftNav extends Component {
     this.props.getMenuList();
   }
   render() {
-    // let combineMenuList=menuConfig.concat(MenuList)
+    let combineMenuList=menuConfig.concat(this.props.MenuList)
     // console.log(this.props)
     return (
       <div className="left-nav">
@@ -53,7 +52,7 @@ class LeftNav extends Component {
           {this.props.collapsed ? <span></span> : <span>React后台</span>}
         </div>
         <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
-          {this.getMenuListTree(this.props.MenuList,0)}
+          {this.getMenuListTree(combineMenuList,0)}
         </Menu>
       </div>
     );

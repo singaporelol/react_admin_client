@@ -6,7 +6,8 @@ import Header from "./../../components/header/header";
 import { Route, Switch } from "react-router-dom";
 import "./admin.less";
 import Main from "./../../components/main/main";
-import User from "./../../components/user/user";
+import UserInfo from "../../components/userinfo/userinfo";
+import User from "../../components/user/user";
 
 const { Content, Footer, Sider } = Layout;
 
@@ -27,7 +28,7 @@ class Admin extends Component {
   //   })
   // }
   render() {
-    // console.log(this.props);
+    console.log(this.props);
     let { path } = this.props.match;
     return (
       <Layout className="admin">
@@ -43,15 +44,13 @@ class Admin extends Component {
           <Header />
           <Content style={{ margin: "16px 16px", backgroundColor:"#fff" }}>
             <Breadcrumb style={{ margin: "16px 16px", borderBottom:"1px solid #aaa" }} separator=">">
-              {/* <Breadcrumb.Item>User</Breadcrumb.Item>
+              {/* <Breadcrumb.Item><a>user</a></Breadcrumb.Item>
               <Breadcrumb.Item>Bill</Breadcrumb.Item> */}
               {/* {this.getBreadcrumb(path)} */}
             </Breadcrumb>
-            {/* <div style={{ padding: 24, background: "#fff", minHeight: 360 }}>
-              Bill is a cat.
-            </div> */}
             <Switch>
               <Route path={path} exact component={Main} />
+              <Route path={`${path}/userinfo`} component={UserInfo} />
               <Route path={`${path}/user`} component={User} />
               <Route path={`${path}/`} component={Main} />
             </Switch>
