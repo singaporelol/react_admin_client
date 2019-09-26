@@ -4,7 +4,9 @@ export const userlistReducer = (state = [], action) => {
     case ActionType.GET_USERLIST:
       return [...action.payload];
     case ActionType.ADD_USER:
-      return [...state,action.payload]
+      return [...state,action.payload];
+    case ActionType.GET_USERLISTBYPAGINATION:
+      return [...action.payload]
     default:
       return state
   }

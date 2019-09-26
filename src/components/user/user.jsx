@@ -25,6 +25,7 @@ export class User extends Component {
       vasible: false,
       currentPage:1,
       pageSize:3,
+      total:0,
 			columns: [
 				{
 					title: "用户名",
@@ -47,9 +48,12 @@ export class User extends Component {
 			]
 		};
 	}
-	componentDidMount() {
+	async componentDidMount() {
     // this.props.getUserlist();
-    this.props.getUserlistByPagination(this.state.currentPage,this.state.pageSize)
+    let total=await this.props.getUserlistByPagination(this.state.currentPage,this.state.pageSize)
+    this.setState({
+      total:total
+    })
 	}
 	showModal = () => {
 		this.setState({
@@ -89,10 +93,9 @@ export class User extends Component {
             rowKey="Id"
             pagination={{
               defaultPageSize:this.state.pageSize,
-              // total:10,
+              total:this.state.total,
               onChange:(page,pageSize)=>{
-                console.log(page)
-                console.log(pageSize)
+                this.props.getUserlistByPagination(page,pageSize)
               }
             }}
 					/>
@@ -130,7 +133,7 @@ const mapDispatchToProps = dispatch => ({
 	// 	dispatch(ActionCreator.asyGetUserlist());
   // },
   getUserlistByPagination(currentPage,pageSize){
-    dispatch(ActionCreator.asyGetUserlistByPagination(currentPage,pageSize))
+     return dispatch(ActionCreator.asyGetUserlistByPagination(currentPage,pageSize))
   },
   addUser(user){
     dispatch(ActionCreator.asyAddUser(user));
